@@ -1,7 +1,7 @@
 import React from "react";
 
 interface IProps {
-  onClick: any;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
   buttonText: string;
 }
 

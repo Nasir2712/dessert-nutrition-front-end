@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { NutritionInfo} from "./dessertsSlice";
+import { NutritionInfo } from "./dessertsSlice";
 
 interface newDessertState {
   [index: string]: any;
@@ -41,8 +41,6 @@ const newDessert = createSlice({
   },
 });
 
-export const {
-  onChange,
-} = newDessert.actions;
+export const { onChange } = newDessert.actions;
 
 export default newDessert.reducer;

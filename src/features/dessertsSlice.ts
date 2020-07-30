@@ -40,9 +40,6 @@ const desserts = createSlice({
       state.selected = [];
       state.error = null;
     },
-    getDessertsFailure(state, action: PayloadAction<string>) {
-      state.error = action.payload;
-    },
     onSelected(state, action: PayloadAction<string>) {
       const name = action.payload;
       if (state.selected.indexOf(name) === -1) {
@@ -54,10 +51,6 @@ const desserts = createSlice({
   },
 });
 
-export const {
-  getDessertsSuccess,
-  getDessertsFailure,
-  onSelected,
-} = desserts.actions;
+export const { getDessertsSuccess, onSelected } = desserts.actions;
 
 export default desserts.reducer;

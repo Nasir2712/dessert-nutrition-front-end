@@ -11,6 +11,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 type InputEvent = ChangeEvent<HTMLInputElement>;
 
+interface Data {
+  addDessert: Dessert[];
+}
+
 const ADD_DESSERT = gql`
   mutation AddDessert($dessert: DessertInput) {
     addDessert(dessert: $dessert) {
@@ -25,12 +29,7 @@ const ADD_DESSERT = gql`
   }
 `;
 
-interface Data {
-  addDessert: Dessert[];
-}
-
-const AddNewForm = (props: any) => {
-  const { className } = props;
+const AddNewForm = () => {
   const dispatch = useDispatch();
 
   // Modal Toggling
@@ -63,7 +62,7 @@ const AddNewForm = (props: any) => {
       {(addDessert) => (
         <div>
           <Button buttonText="ADD NEW" onClick={toggle} />
-          <Modal isOpen={modal} toggle={toggle} className={className}>
+          <Modal isOpen={modal} toggle={toggle}>
             <ModalHeader toggle={toggle}>Add New Dessert</ModalHeader>
             <ModalBody>
               <main className="pa4 black-80">

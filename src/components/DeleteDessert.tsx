@@ -1,9 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import {
-  Dessert,
-  getDessertsSuccess,
-} from "../features/dessertsSlice";
+import { Dessert, getDessertsSuccess } from "../features/dessertsSlice";
 import Button from "./common/Button";
 import { gql } from "@apollo/client";
 import { Mutation } from "@apollo/client/react/components";

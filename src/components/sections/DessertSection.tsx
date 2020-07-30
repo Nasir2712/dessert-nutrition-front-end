@@ -10,7 +10,6 @@ interface Data {
   desserts: Dessert[];
 }
 
-
 const FETCH_DESSERTS = gql`
   {
     desserts {

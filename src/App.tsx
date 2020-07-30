@@ -1,8 +1,8 @@
 import React from "react";
-import "./App.css";
 import DessertSection from "./components/sections/DessertSection";
 import ResetData from "./components/ResetData";
 import SelectionSection from "./components/sections/SelectionSection";
+import "./App.css";
 
 function App() {
   return (
