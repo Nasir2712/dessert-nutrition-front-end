@@ -1,26 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { gql } from "@apollo/client";
-import { AppThunk } from "../app/store";
-import { client } from "../index";
-import { getDessertsSuccess, NutritionInfo} from "./dessertsSlice";
-
-
-const ADD_DESSERT = gql`
-
-  mutation AddDessert($dessert: DessertInput){
-      addDessert(dessert: $dessert) {
-          dessert
-          nutritionInfo {
-              calories
-              fat
-              carb
-              protein
-          }
-      }
-  }
-  
-`;
-
+import { NutritionInfo} from "./dessertsSlice";
 
 interface newDessertState {
   [index: string]: any;
@@ -59,39 +38,11 @@ const newDessert = createSlice({
         state.nutritionInfo[name] = value ? parseInt(value) : value;
       }
     },
-    saveDessertsSuccess(state) {
-      state.loading = false;
-      state.error = null;
-    },
-    saveDessertsFailure(state, action: PayloadAction<string>) {
-      state.loading = false;
-      state.error = action.payload;
-    },
   },
 });
 
 export const {
   onChange,
-  saveDessertsSuccess,
-  saveDessertsFailure,
 } = newDessert.actions;
 
 export default newDessert.reducer;
-
-const saveDesserts = async (dessert: string, nutritionInfo: NutritionInfo) => {
-    const dessertInfo = {
-        dessert,
-        nutritionInfo
-    }
-    const response = await client.mutate({mutation: ADD_DESSERT, variables: { dessert: dessertInfo}});
-    return response.data?.addDessert;
-};
-
-export const addDessert = (dessert: string, nutritionInfo: NutritionInfo): AppThunk => async (dispatch) => {
-  try {
-    const desserts = await saveDesserts(dessert, nutritionInfo)
-    dispatch(getDessertsSuccess({ desserts }));
-  } catch (err) {
-    dispatch(saveDessertsFailure(err));
-  }
-};

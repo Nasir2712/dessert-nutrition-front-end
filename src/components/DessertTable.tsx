@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dessert, onSelected } from "../features/dessertsSlice";
 import "tachyons";
@@ -8,6 +8,8 @@ interface sortConfig {
   name: string;
   order: string;
 }
+
+type InputEvent = ChangeEvent<HTMLInputElement>;
 
 // custom hook for sorting
 const useSorting = (desserts: Dessert[]) => {
@@ -56,7 +58,7 @@ export default function DessertTable() {
 
   const rowSelected = (name: string) => selected.indexOf(name) !== -1;
 
-  const handleClick = (name: string) => (event: any) => {
+  const handleClick = (name: string) => (event: InputEvent) => {
     dispatch(onSelected(name));
   };
 
