@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Dessert, fetchDesserts, onSelected } from "../features/dessertsSlice";
-import { RootState } from "../app/rootReducer";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Dessert, onSelected } from "../features/dessertsSlice";
 import "tachyons";
+import { RootState } from "../app/rootReducer";
 
 interface sortConfig {
   name: string;
   order: string;
 }
 
+// custom hook for sorting
 const useSorting = (desserts: Dessert[]) => {
   const [sortOrder, setSortOrder] = React.useState<null | sortConfig>(null);
 
@@ -47,14 +48,13 @@ const useSorting = (desserts: Dessert[]) => {
 
 export default function DessertTable() {
   const dispatch = useDispatch();
-  const dessertsData = (state: RootState) => state.desserts;
-  const { desserts, selected } = useSelector(dessertsData);
-  const { sortedDesserts, sort } = useSorting(desserts);
-  const rowSelected = (name: string) => selected.indexOf(name) !== -1;
 
-  useEffect(() => {
-    dispatch(fetchDesserts());
-  }, [dispatch]);
+  // get state from the redux store
+  const dessertsState = (state: RootState) => state.desserts;
+  const { selected, desserts } = useSelector(dessertsState);
+  const { sortedDesserts, sort } = useSorting(desserts);
+
+  const rowSelected = (name: string) => selected.indexOf(name) !== -1;
 
   const handleClick = (name: string) => (event: any) => {
     dispatch(onSelected(name));
@@ -89,7 +89,11 @@ export default function DessertTable() {
         <tr className="stripe-dark">
           <th className="fw6 t1 pa3 bg-white"></th>
           <th className="fw6 t1 pa3 bg-white">
-            <button data-testid='dessert-button' type="button" onClick={() => sort("dessert")}>
+            <button
+              data-testid="dessert-button"
+              type="button"
+              onClick={() => sort("dessert")}
+            >
               Dessert (100g serving)
             </button>
           </th>

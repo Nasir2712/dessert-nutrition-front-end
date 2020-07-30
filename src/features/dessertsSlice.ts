@@ -3,20 +3,6 @@ import { gql } from "@apollo/client";
 import { AppThunk } from "../app/store";
 import { client } from "../index";
 
-const GET_DESSERTS = gql`
-  {
-    desserts {
-      dessert
-      nutritionInfo {
-        calories
-        fat
-        carb
-        protein
-      }
-    }
-  }
-`;
-
 const DELETE_DESSERTS = gql`
   mutation DeleteDesserts($dessert: [String]) {
     deleteDesserts(dessert: $dessert) {
@@ -66,14 +52,12 @@ interface DessertsLoaded {
 interface DessertsState {
   desserts: Dessert[];
   selected: string[];
-  loading: boolean;
   error: string | null;
 }
 
 const initialState: DessertsState = {
   desserts: [],
   selected: [],
-  loading: false,
   error: null,
 };
 
@@ -81,19 +65,13 @@ const desserts = createSlice({
   name: "desserts",
   initialState,
   reducers: {
-    getDessertsStart(state) {
-      state.loading = true;
-      state.error = null;
-    },
     getDessertsSuccess(state, action: PayloadAction<DessertsLoaded>) {
       const { desserts } = action.payload;
       state.desserts = desserts;
-      state.loading = false;
       state.selected = [];
       state.error = null;
     },
     getDessertsFailure(state, action: PayloadAction<string>) {
-      state.loading = false;
       state.error = action.payload;
     },
     onSelected(state, action: PayloadAction<string>) {
@@ -108,19 +86,11 @@ const desserts = createSlice({
 });
 
 export const {
-  getDessertsStart,
   getDessertsSuccess,
   getDessertsFailure,
   onSelected,
 } = desserts.actions;
 export default desserts.reducer;
-
-export const getDesserts = async () => {
-  const response = await client.query({
-    query: GET_DESSERTS,
-  });
-  return response.data?.desserts;
-};
 
 const deleteDesserts = async (selected: string[]) => {
   const response = await client.mutate({
@@ -135,16 +105,6 @@ const resettingData = async () => {
     mutation: RESET_DATA,
   });
   return response.data?.resetData;
-};
-
-export const fetchDesserts = (): AppThunk => async (dispatch) => {
-  try {
-    dispatch(getDessertsStart());
-    const desserts = await getDesserts();
-    dispatch(getDessertsSuccess({ desserts }));
-  } catch (err) {
-    dispatch(getDessertsFailure(err));
-  }
 };
 
 export const onDeleteDesserts = (selected: string[]): AppThunk => async (
