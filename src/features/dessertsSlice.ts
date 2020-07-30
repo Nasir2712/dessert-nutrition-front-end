@@ -1,35 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { gql } from "@apollo/client";
-import { AppThunk } from "../app/store";
-import { client } from "../index";
-
-const DELETE_DESSERTS = gql`
-  mutation DeleteDesserts($dessert: [String]) {
-    deleteDesserts(dessert: $dessert) {
-      dessert
-      nutritionInfo {
-        calories
-        fat
-        carb
-        protein
-      }
-    }
-  }
-`;
-
-const RESET_DATA = gql`
-  mutation ResetData {
-    resetData {
-      dessert
-      nutritionInfo {
-        calories
-        fat
-        carb
-        protein
-      }
-    }
-  }
-`;
 
 export interface Dessert {
   [index: string]: any;
@@ -90,39 +59,5 @@ export const {
   getDessertsFailure,
   onSelected,
 } = desserts.actions;
+
 export default desserts.reducer;
-
-const deleteDesserts = async (selected: string[]) => {
-  const response = await client.mutate({
-    mutation: DELETE_DESSERTS,
-    variables: { dessert: selected },
-  });
-  return response.data?.deleteDesserts;
-};
-
-const resettingData = async () => {
-  const response = await client.mutate({
-    mutation: RESET_DATA,
-  });
-  return response.data?.resetData;
-};
-
-export const onDeleteDesserts = (selected: string[]): AppThunk => async (
-  dispatch
-) => {
-  try {
-    const desserts = await deleteDesserts(selected);
-    dispatch(getDessertsSuccess({ desserts }));
-  } catch (err) {
-    dispatch(getDessertsFailure(err));
-  }
-};
-
-export const resetData = (): AppThunk => async (dispatch) => {
-  try {
-    const desserts = await resettingData();
-    dispatch(getDessertsSuccess({ desserts }));
-  } catch (err) {
-    dispatch(getDessertsFailure(err));
-  }
-};

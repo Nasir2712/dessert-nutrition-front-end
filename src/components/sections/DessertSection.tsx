@@ -6,6 +6,11 @@ import { gql } from "@apollo/client";
 import { Query } from "@apollo/client/react/components";
 import "tachyons";
 
+interface Data {
+  desserts: Dessert[];
+}
+
+
 const FETCH_DESSERTS = gql`
   {
     desserts {
@@ -19,10 +24,6 @@ const FETCH_DESSERTS = gql`
     }
   }
 `;
-
-interface Data {
-  desserts: Dessert[];
-}
 
 const DessertSection = () => {
   const dispatch = useDispatch();

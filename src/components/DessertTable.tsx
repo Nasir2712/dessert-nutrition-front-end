@@ -16,7 +16,7 @@ const useSorting = (desserts: Dessert[]) => {
   const newSortedDesserts = React.useMemo(() => {
     let sortedDesserts = [...desserts]; // to make a copy of the original desserts so that sort does not sort the original array
     if (sortOrder !== null) {
-      sortedDesserts.sort((a, b) => {
+      sortedDesserts?.sort((a, b) => {
         if (
           a[sortOrder.name] < b[sortOrder.name] ||
           a.nutritionInfo[sortOrder.name] < b.nutritionInfo[sortOrder.name]

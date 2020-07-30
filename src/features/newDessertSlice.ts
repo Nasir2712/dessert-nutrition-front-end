@@ -56,7 +56,7 @@ const newDessert = createSlice({
       if (name === "dessert") {
         state[name] = value;
       } else {
-        state.nutritionInfo[name] = parseInt(value);
+        state.nutritionInfo[name] = value ? parseInt(value) : value;
       }
     },
     saveDessertsSuccess(state) {
