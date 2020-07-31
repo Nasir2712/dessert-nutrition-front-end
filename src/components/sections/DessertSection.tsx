@@ -9,8 +9,7 @@ import "tachyons";
 interface Data {
   desserts: Dessert[];
 }
-
-const FETCH_DESSERTS = gql`
+export const FETCH_DESSERTS = gql`
   {
     desserts {
       dessert

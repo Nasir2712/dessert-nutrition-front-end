@@ -5,7 +5,7 @@ import { Dessert, getDessertsSuccess } from "../features/dessertsSlice";
 import { Mutation } from "@apollo/client/react/components";
 import { gql } from "@apollo/client";
 
-const RESET_DATA = gql`
+export const RESET_DATA = gql`
   mutation ResetData {
     resetData {
       dessert

@@ -15,7 +15,7 @@ interface Data {
   addDessert: Dessert[];
 }
 
-const ADD_DESSERT = gql`
+export const ADD_DESSERT = gql`
   mutation AddDessert($dessert: DessertInput) {
     addDessert(dessert: $dessert) {
       dessert
